@@ -1,0 +1,5 @@
+import {readFile,readdir,writeFile,mkdir,rm,copyFile} from 'node:fs/promises';
+import path from 'node:path';
+const root=path.resolve('browser-dist'),assets=path.join(root,'assets'),files=await readdir(assets);let html=await readFile(path.join(root,'index.html'),'utf8');
+for(const name of files){let content=await readFile(path.join(assets,name),'utf8');if(name.endsWith('.css')){content=content.replace(/<\/style/gi,'<\\/style');html=html.replace(new RegExp(`<link rel="stylesheet" crossorigin href="\\./assets/${name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}">`),()=>`<style>${content}</style>`);}if(name.endsWith('.js')){content=content.replace(/<\/script/gi,'<\\/script');html=html.replace(new RegExp(`<script type="module" crossorigin src="\\./assets/${name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}"></script>`),()=>`<script type="module">${content}</script>`);}}
+await mkdir('release-browser',{recursive:true});await writeFile(path.join('release-browser','Sheet-Search-Browser.html'),html);await copyFile('README-BROWSER.md',path.join('release-browser','使い方.md'));await rm(root,{recursive:true,force:true});
