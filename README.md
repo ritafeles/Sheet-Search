@@ -41,3 +41,6 @@ npm start
 npm run package
 ```
 Electronのメインプロセスがファイル選択と保存を管理し、Node Workerが解析・検索を担当します。React画面にはページ単位で結果を渡し、仮想スクロールで表示します。ソースは `src/` と `electron/`、検証は `tests/` にあります。
+
+## ブラウザ版の公開（GitHub Pages）
+`main` ブランチへのpushで `.github/workflows/pages.yml` が `npm run build:browser` を実行し、`Sheet-Search-Browser.html` を `index.html` としてGitHub Pagesへ公開します。初回はリポジトリの Settings → Pages → Source を「GitHub Actions」に設定してください。Actionsタブから手動実行もできます。
